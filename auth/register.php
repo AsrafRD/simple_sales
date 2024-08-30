@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../config.php';
-include '../functions.php';
+include '../config.php'; // Pastikan path ke config.php benar
+include '../functions.php'; // Pastikan path ke functions.php benar
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -30,11 +30,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .register-container {
+            max-width: 500px;
+            width: 100%;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .register-header {
+            margin-bottom: 20px;
+        }
+        .register-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4 text-center">Register</h1>
+    <div class="register-container">
+        <div class="register-header">
+            <h1 class="text-center">Register</h1>
+        </div>
         <?php if (isset($success)): ?>
             <div class="alert alert-success" role="alert">
                 <?= htmlspecialchars($success) ?>
@@ -55,9 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Register</button>
-            <p class="text-center mt-3">Have an account? <a href="login.php">Login here</a>.</p>
         </form>
+        <div class="register-footer">
+            <p>Alreadyave an account? <a href="login.php">Login here</a>.</p>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
