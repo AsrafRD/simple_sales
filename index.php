@@ -1,5 +1,14 @@
 <?php
 include 'functions.php';
+include 'layouts/header.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+    logout(); // Panggil fungsi logout
+}
+
+$loggedIn = isset($_SESSION['logged_in']) && $_SESSION['logged_in'];
+
+// Ambil produk dari database
 $products = getProducts();
 ?>
 
@@ -10,7 +19,7 @@ $products = getProducts();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Sales</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css"> <!-- Your custom styles if needed -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <h1 class="text-center my-4">Welcome to Simple Sales</h1>
@@ -24,11 +33,11 @@ $products = getProducts();
                 <?php foreach ($products as $product): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="assets/images/<?= $product['image'] ?>" class="card-img-top" alt="<?= $product['name'] ?>">
+                            <img src="assets/images/<?= htmlspecialchars($product['image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
                             <div class="card-body">
-                                <h5 class="card-title"><?= $product['name'] ?></h5>
-                                <p class="card-text"><?= $product['price'] ?> USD</p>
-                                <a href="cart.php?action=add&id=<?= $product['id'] ?>" class="btn btn-primary">Add to Cart</a>
+                                <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
+                                <p class="card-text"><?= htmlspecialchars($product['price']) ?> USD</p>
+                                <a class="btn btn-primary" href="add_to_cart.php?id=<?= htmlspecialchars($product['id']) ?>&quantity=1">Add to Cart</a>
                             </div>
                         </div>
                     </div>
@@ -37,9 +46,10 @@ $products = getProducts();
         </div>
     </div>
 
+    <?php include 'layouts/footer.php'; ?>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-

@@ -1,8 +1,41 @@
 <?php
 include '../config.php';
 include '../functions.php';
+include '../layouts/header.php';
 
-// Mengambil produk dari database
+// Periksa apakah tombol logout ditekan
+// if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
+//     logout();
+// }
+
+session_start(); // Pastikan sesi dimulai di bagian paling atas halaman
+
+// Debugging: Periksa apakah sesi diset dengan benar
+var_dump($_SESSION);
+
+if (!isAuthenticated()) {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
+if (!isAdmin()) {
+    echo "Access denied. You are not authorized to view this page.";
+    exit();
+}
+
+// Jika sampai di sini, berarti pengguna telah diotentikasi dan merupakan admin
+
+
+// Cek apakah sesi login ada dan benar
+// if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+//     // Jika tidak ada atau sesi tidak benar, arahkan kembali ke halaman login
+//     header('Location: ../auth/login.php');
+//     exit();
+// }
+
+// Jika sesi ada dan benar, lanjutkan dengan konten halaman
+echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+
 $products = getProducts();
 ?>
 

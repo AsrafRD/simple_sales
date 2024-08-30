@@ -2,6 +2,16 @@
 include '../config.php';
 include '../functions.php';
 
+if (!isAuthenticated()) {
+    header('Location: login.php');
+    exit();
+}
+
+if (!isAdmin()) {
+    echo "Access denied. You are not authorized to view this page.";
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     addProduct($conn);
 }
