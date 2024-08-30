@@ -1,16 +1,17 @@
 <?php
 include '../config.php';
 include '../functions.php';
+include 'header.php';
 
-if (!isAuthenticated()) {
-    header('Location: login.php');
-    exit();
-}
+// if (!isAuthenticated()) {
+//     header('Location: login.php');
+//     exit();
+// }
 
-if (!isAdmin()) {
-    echo "Access denied. You are not authorized to view this page.";
-    exit();
-}
+// if (!isAdmin()) {
+//     echo "Access denied. You are not authorized to view this page.";
+//     exit();
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     updateProduct($conn);
@@ -53,6 +54,7 @@ $product = getProduct($id);
                 <?php endif; ?>
             </div>
             <button type="submit" name="update_product" class="btn btn-primary">Update Product</button>
+            <a href="index.php" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

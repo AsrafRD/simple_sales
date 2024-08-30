@@ -1,27 +1,26 @@
 <?php
+session_start();
 include '../config.php';
 include '../functions.php';
-include '../layouts/header.php';
+include 'header.php';
 
 // Periksa apakah tombol logout ditekan
 // if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
 //     logout();
 // }
 
-session_start(); // Pastikan sesi dimulai di bagian paling atas halaman
 
 // Debugging: Periksa apakah sesi diset dengan benar
-var_dump($_SESSION);
 
-if (!isAuthenticated()) {
-    header('Location: ../auth/login.php');
-    exit();
-}
+// if (!isAuthenticated()) {
+//     header('Location: ../auth/login.php');
+//     exit();
+// }
 
-if (!isAdmin()) {
-    echo "Access denied. You are not authorized to view this page.";
-    exit();
-}
+// if (!isAdmin()) {
+//     echo "Access denied. You are not authorized to view this page.";
+//     exit();
+// }
 
 // Jika sampai di sini, berarti pengguna telah diotentikasi dan merupakan admin
 
@@ -34,7 +33,7 @@ if (!isAdmin()) {
 // }
 
 // Jika sesi ada dan benar, lanjutkan dengan konten halaman
-echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
+// echo "Welcome, " . htmlspecialchars($_SESSION['username']) . "!";
 
 $products = getProducts();
 ?>

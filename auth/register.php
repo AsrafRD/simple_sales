@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../config.php'; // Pastikan path ke config.php benar
-include '../functions.php'; // Pastikan path ke functions.php benar
+include '../config.php';
+include '../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -15,9 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $stmt->bind_param("ss", $username, $hashedPassword);
     if ($stmt->execute()) {
-        echo "Registration successful.";
+        $success = "Registration successful.";
     } else {
-        echo "Error: " . $stmt->error;
+        $error = "Error: " . $stmt->error;
     }
     $stmt->close();
 }
@@ -30,10 +30,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Register</h1>
+        <h1 class="mb-4 text-center">Register</h1>
+        <?php if (isset($success)): ?>
+            <div class="alert alert-success" role="alert">
+                <?= htmlspecialchars($success) ?>
+            </div>
+        <?php endif; ?>
+        <?php if (isset($error)): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= htmlspecialchars($error) ?>
+            </div>
+        <?php endif; ?>
         <form method="POST" action="register.php">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -43,9 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-            <a href="login.php" class="btn btn-secondary">Login</a>
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <p class="text-center mt-3">Have an account? <a href="login.php">Login here</a>.</p>
         </form>
     </div>
 </body>
 </html>
+

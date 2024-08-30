@@ -1,6 +1,17 @@
 <?php
+session_start();
 include 'functions.php';
 include 'layouts/header.php';
+
+// if (!isAuthenticated()) {
+//     header('Location: auth/login.php');
+//     exit();
+// }
+
+// if (!isCustomer()) {
+//     echo "Access denied. You are not authorized to view this page.";
+//     exit();
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
     logout(); // Panggil fungsi logout

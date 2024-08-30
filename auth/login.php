@@ -29,10 +29,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link ke file styles.css -->
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="mb-4">Login</h1>
+        <h1 class="mb-4 text-center">Login</h1>
         <?php if (isset($error)): ?>
             <div class="alert alert-danger" role="alert">
                 <?= htmlspecialchars($error) ?>
@@ -47,9 +48,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="register.php" class="btn btn-secondary">Register</a>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <p class="text-center mt-3">Don't have an account? <a href="register.php">Register here</a>.</p>
         </form>
     </div>
 </body>
 </html>
+

@@ -1,16 +1,17 @@
 <?php
 include '../config.php';
 include '../functions.php';
+include 'header.php';
 
-if (!isAuthenticated()) {
-    header('Location: login.php');
-    exit();
-}
+// if (!isAuthenticated()) {
+//     header('Location: login.php');
+//     exit();
+// }
 
-if (!isAdmin()) {
-    echo "Access denied. You are not authorized to view this page.";
-    exit();
-}
+// if (!isAdmin()) {
+//     echo "Access denied. You are not authorized to view this page.";
+//     exit();
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     addProduct($conn);
@@ -46,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="file" id="image" name="image" class="form-control-file" required>
             </div>
             <button type="submit" name="add_product" class="btn btn-primary">Add Product</button>
+            <a href="index.php" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

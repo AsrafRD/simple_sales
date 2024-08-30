@@ -1,8 +1,6 @@
 <?php
 include 'config.php';
 
-session_start();
-
 function login($username, $password) {
     
     global $conn;
@@ -241,34 +239,28 @@ function calculateTotalAmount($cartItems) {
 }
 
 // Simpan pesanan ke database (Contoh sederhana)
+// Contoh fungsi saveOrder
 function saveOrder($cartItems, $totalAmount) {
-    global $conn; // Pastikan $conn adalah koneksi database global
-    $name = $_POST['name'];
-    $address = $_POST['address'];
-    $paymentMethod = $_POST['payment_method'];
+    global $mysqli; // Pastikan koneksi database tersedia di sini
+    $query = "INSERT INTO orders (total_amount) VALUES (?)";
+    $stmt = $mysqli->prepare($query);
 
-    // Simpan pesanan ke tabel orders
-    $stmt = $conn->prepare("INSERT INTO orders (name, address, payment_method, total_amount) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param('sssd', $name, $address, $paymentMethod, $totalAmount);
-    
-    if ($stmt->execute()) {
-        $orderId = $stmt->insert_id;
-
-        // Simpan item pesanan ke tabel order_items
-        foreach ($cartItems as $productId => $quantity) {
-            $product = getProduct($productId);
-            $stmtItem = $conn->prepare("INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)");
-            $stmtItem->bind_param('iiid', $orderId, $productId, $quantity, $product['price']);
-            $stmtItem->execute();
-            $stmtItem->close();
-        }
-        
-        $stmt->close();
-        return $orderId;
-    } else {
-        return false;
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($mysqli->error));
     }
+
+    $stmt->bind_param('d', $totalAmount);
+
+    if (!$stmt->execute()) {
+        die('Execute failed: ' . htmlspecialchars($stmt->error));
+    }
+
+    $orderId = $mysqli->insert_id; // Ambil ID pesanan yang baru disimpan
+    $stmt->close();
+    
+    return $orderId;
 }
+
 
 
 // Kosongkan keranjang setelah checkout

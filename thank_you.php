@@ -1,4 +1,5 @@
 <?php
+session_start();
 $orderId = $_GET['order_id'] ?? null;
 
 if (!$orderId) {
